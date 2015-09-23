@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+    <class name="com.model.Animal" table="animal" >
+        <id name="id" type="int" column="id">
+            <generator class="increment"/>
+        </id>
+        <property name="denumire" column="denumire" type="string"/>
+        <property name="idStapan" column="idStapan" type="int"/>
+        <property name="homeless" column="homeless" type="boolean"/>
+    </class>
+
+    <class name = "com.model.Stapan" table="stapan" lazy="true">
+        <id name="id" type="int" column="idStapan">
+            <generator class="increment"/>
+        </id>
+        <set name="animals" cascade="all" lazy="false">
+            <key column="idStapan"/>
+            <one-to-many class="com.model.Animal"/>
+        </set>
+        <property name="nume" column="nume" type="string"/>
+        <property name="cnp" column="cnp" type="string"/>
+        <property name="active" column="active" type="int"/>
+    </class>
+</hibernate-mapping>

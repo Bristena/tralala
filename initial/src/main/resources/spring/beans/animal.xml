@@ -1,0 +1,25 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
+
+
+    <bean id="animalDao" class="com.dao.AnimalDaoHibernateImpl" >
+        <property name="sessionFactory" ref="sessionFactory">
+
+        </property>
+    </bean>
+
+    <bean id="animalService" class="com.service.AnimalServiceImpl" >
+        <property name="animalDao" ref="animalDao" />
+        <!--<property name="stapanService" ref="stapanService"/>-->
+
+    </bean>
+    <bean id="animalController" class="com.controller.AnimalController">
+    <property name="animalService" ref="animalService">
+    </property>
+    </bean>
+
+
+
+</beans>
