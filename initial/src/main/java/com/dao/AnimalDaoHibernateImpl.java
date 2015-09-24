@@ -7,32 +7,36 @@ package com.dao;
 import com.model.Animal;
 import org.hibernate.Query;
 import org.hibernate.Session;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.orm.hibernate4.support.HibernateDaoSupport;
 
 import java.sql.SQLException;
 import java.util.List;
 
 public class AnimalDaoHibernateImpl extends HibernateDaoSupport implements IAnimalDao {
+    private final Logger logger = LoggerFactory.getLogger(Animal.class);
 
     @Override
     public List<Animal> getAnimals() {
-    List list = getHibernateTemplate().loadAll(Animal.class);
+        List list = getHibernateTemplate().loadAll(Animal.class);
+        logger.debug("getAnimals()");
         return list;
     }
-
 
 
     @Override
     public void delete(int id) {
         Animal a = getAnimalById(id);
         getHibernateTemplate().delete(a);
+        logger.debug("deleting animal " + id);
     }
 
     @Override
     public void update(int id, String denumire, boolean homeless, int idStapan) {
         Animal a = new Animal();
         a.setDenumire(denumire);
-//        a.setId(id);
+
         getHibernateTemplate().update(a);
     }
 
@@ -40,12 +44,14 @@ public class AnimalDaoHibernateImpl extends HibernateDaoSupport implements IAnim
     public Animal getAnimalById(int id) {
 //    List list = getHibernateTemplate().find("from Animal where id = ?", id);
         Animal animal = getHibernateTemplate().get(Animal.class, id);
-        if(animal != null) return  animal;
-        else
-//        if((Animal)list.get(0)!=null && list.size()!=0) {
-//            return (Animal) list.get(0);
-//        }
-        return null;
+        if (animal != null) {
+            logger.info("get animal by id " + id);
+            return animal;
+        }
+        else {
+            logger.info("nu exista animal cu id-ul  " + id);
+            return null;
+        }
     }
 
 
@@ -91,7 +97,7 @@ public class AnimalDaoHibernateImpl extends HibernateDaoSupport implements IAnim
     public Animal getAnimalByDenumire(String denumire) {
         List list = getHibernateTemplate().find("from Animal where denumire = ?", denumire);
         //      Animal animal = getHibernateTemplate().get(Animal.class, id);
-        return (Animal)list.get(0);
+        return (Animal) list.get(0);
     }
 
     @Override

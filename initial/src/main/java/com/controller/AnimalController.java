@@ -4,6 +4,7 @@ import com.model.Animal;
 import com.model.Stapan;
 import com.service.IAnimalService;
 import com.service.IStapanSerivce;
+import org.apache.log4j.Logger;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -22,12 +23,15 @@ public class AnimalController {
 
     IAnimalService animalService;
     IStapanSerivce stapanService;
+    static Logger log = Logger.getLogger(AnimalController.class);
 
     public void setAnimalService(IAnimalService animalService){
         this.animalService = animalService;
+
     }
     @RequestMapping("/animals/")
     public @ResponseBody List<Animal> getAnimals(){
+        log.info("getAnimals");
        return animalService.getAnimals();
 
     }

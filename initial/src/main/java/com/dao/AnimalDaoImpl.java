@@ -2,6 +2,7 @@ package com.dao;
 
 import com.hello.AnimalRowMapper;
 import com.model.Animal;
+import org.apache.log4j.Logger;
 import org.springframework.jdbc.core.BatchPreparedStatementSetter;
 import org.springframework.jdbc.core.JdbcTemplate;
 
@@ -20,6 +21,8 @@ import java.util.Map;
 
 public class AnimalDaoImpl implements IAnimalDao {
     private DataSource ds;
+    private final Logger logger = Logger.getLogger(AnimalDaoImpl.class);
+
 
     @Override
     public List<Animal> getDenumireAnimal(String nume) {
@@ -45,7 +48,9 @@ public class AnimalDaoImpl implements IAnimalDao {
     }
 
     public void setDs(DataSource ds) {
+
         this.ds = ds;
+//        logger.debug("setter ds", ds);
     }
 
     @Override
@@ -67,6 +72,7 @@ public class AnimalDaoImpl implements IAnimalDao {
 
     @Override
     public void delete(int id) {
+        logger.debug("deleting animal " + id);
         jdbcTemplate = new JdbcTemplate(ds);
         String sql = "delete from animal where idAnimal = ?";
         jdbcTemplate.update(sql, new Object[]{id});
@@ -80,6 +86,8 @@ public class AnimalDaoImpl implements IAnimalDao {
 
     @SuppressWarnings({"unchecked"})
     public Animal getAnimalById(int id) {
+        logger.info("Animal " + id);
+
         String sql = "select * from animal where id = ?";
         jdbcTemplate = new JdbcTemplate(ds);
         Animal a = (Animal) jdbcTemplate.queryForObject(sql, new Object[]{id}, new AnimalRowMapper());

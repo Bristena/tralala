@@ -2,6 +2,7 @@ package com.service;
 
 import com.dao.IAnimalDao;
 import com.model.Animal;
+import org.apache.log4j.Logger;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.SQLException;
@@ -16,6 +17,7 @@ public class AnimalServiceImpl implements IAnimalService {
 
     private IStapanSerivce stapanSerivce;
     private IAnimalDao animalDao;
+    private final Logger logger = Logger.getLogger(AnimalServiceImpl.class);
     @Override
     public Animal getAnimalByDenumire(String denumire) {
         return animalDao.getAnimalByDenumire(denumire);
@@ -72,6 +74,7 @@ public class AnimalServiceImpl implements IAnimalService {
     @Transactional(readOnly = false)
     @Override
     public void delete(int id) {
+        logger.debug("deleting animal " + id);
         animalDao.delete(id);
     }
 
@@ -99,7 +102,14 @@ public class AnimalServiceImpl implements IAnimalService {
 
     @Override
     public void updateHomelessAnimal(int idAnimal, boolean isHomeless) {
-        animalDao.updateHomelessAnimal(idAnimal, isHomeless);
+        try {
+            animalDao.updateHomelessAnimal(idAnimal, isHomeless);
+
+        }
+        catch (Exception ex){
+            System.err.print(ex.fillInStackTrace());
+        }
+
     }
 
     @Override

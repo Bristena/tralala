@@ -1,5 +1,8 @@
 package com.model;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.io.Serializable;
 
 /**
@@ -12,6 +15,7 @@ public class Animal implements Serializable {
     private int idStapan;
     private boolean homeless;
 
+    private final Logger logger = LoggerFactory.getLogger(Animal.class);
     public boolean isHomeless() {
         return homeless;
     }
@@ -21,6 +25,7 @@ public class Animal implements Serializable {
     }
 
     public int getIdStapan() {
+        logger.info("Getter id stapan", idStapan);
         return idStapan;
     }
 
