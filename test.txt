@@ -1,8 +1,8 @@
-<<<<<<< HEAD
+
 test test test
 =======
 test test testtest test testtest test testtest test testtest test testtest test testtest test test
 aaa
 aaa
 aaaaaa
->>>>>>> 4c4655c38b0a8f5cc7ec40d18ee5ae4450f860c0
+
